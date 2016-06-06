@@ -1,0 +1,33 @@
+#secure {
+    width: 620px;
+}
+#secure table tr th{
+    width: 300px;
+}
+
+#secure table tr td{
+    width: 300px;
+}
+
+#secure h3 {
+    margin-top: 1.2em;
+    margin-bottom: 0.5em;
+}
+
+#secure .short_num {
+    width: 60px;
+}
+
+#secure .header_buttons {
+    text-align: right;
+}
+
+#secure input[readonly]:not(#login_url) {
+    opacity: 0.5;
+}
+
+#login_url {
+    opacity: 1;
+    width:500px;
+    border: none;
+}
