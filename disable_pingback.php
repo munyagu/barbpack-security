@@ -8,7 +8,6 @@ function bs_remove_xmlrpc_methods($methods){
     bp_log("bs_remove_xmlrpc_methods");
     // refer: http://sakuratan.biz/archives/1208
     // refer:http://z9.io/2008/06/08/did-your-wordpress-site-get-hacked/
-    unset( $methods['wp.newComment'] );
     unset( $methods['pingback.ping'] );
     unset( $methods['pingback.extensions.getPingbacks'] );
     return $methods;
