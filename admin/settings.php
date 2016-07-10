@@ -2,8 +2,9 @@
 /*************************************
  * SETTING SCREEN
  *************************************/
-
+require_once dirname(__FILE__).'/../LoginParameter.php';
 require_once dirname(__FILE__).'/../Version.php';
+use barbsecurity\LoginParameter as LoginParameter;
 use barbsecurity\Version as Version;
 
 define('BARB_SECURITY_URL_REGEX', '/[^0-9a-zA-Z_-]/');
