@@ -1,7 +1,7 @@
 <?php
 namespace barbsecurity;
 
-include_once dirname('__FILE__').'/barbpack-security.php';
+include_once dirname(__FILE__).'/barbpack-security.php';
 
 class Version {
 
