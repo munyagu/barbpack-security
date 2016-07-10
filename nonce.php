@@ -1,6 +1,9 @@
 <?php
 /*************** VERIFY THE NONCE AT LOGIN ***************/
 
+require_once dirname(__FILE__).'/Version.php';
+use barbsecurity\Version as Version;
+
 /**
  * ログインフォームにメッセージを表示し、nonceを追加する
  */
@@ -91,6 +94,6 @@ function barb_security_login_init(){
         }
 
     }
-
+    return ;
 }
 add_action( 'login_init', 'barb_security_login_init', 1 );
