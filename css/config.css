@@ -1,6 +1,18 @@
 #secure {
     width: 620px;
 }
+
+#secure table {
+    border-collapse: collapse;
+}
+
+#secure table tr th,
+#secure table tr td {
+    margin: 0px;
+    border: 1px solid #696969;
+    padding: 5px;
+}
+
 #secure table tr th{
     width: 300px;
 }
@@ -20,6 +32,7 @@
 
 #secure .header_buttons {
     text-align: right;
+    margin: 10px 0;
 }
 
 #secure input[readonly]:not(#login_url) {
