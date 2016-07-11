@@ -56,25 +56,77 @@ class LoginParameter {
 
 	public static function activeteLoginParameter(){
 		bp_log("activeteLoginParameter");
-		//add_action('wp_logout', array('barbsecurity\LoginParameter', 'bs_wp_logout'));
-		//add_action('wp_login_failed', array('barbsecurity\LoginParameter', 'bs_front_end_login_fail'));
 
-		//add_filter('wp_redirect', array('barbsecurity\LoginParameter', 'bs_redirect'), 1, 2);
-		//add_filter('wp_redirect','barbsecurity\ttttest', 1, 2);
-		add_filter('login_url',array('barbsecurity\LoginParameter', 'addParameter'),1);
-		add_filter('logout_redirect',array('barbsecurity\LoginParameter', 'addParameter'),1);
+		add_filter('login_url',array('barbsecurity\LoginParameter', 'filter_login_url'),1, 3);
+		add_filter('logout_redirect',array('barbsecurity\LoginParameter', 'filter_logout_redirect'),1);
+		add_filter('lostpassword_redirect',array('barbsecurity\LoginParameter', 'filter_lostpassword_redirect'),1);
+		add_filter('lostpassword_url',array('barbsecurity\LoginParameter', 'filter_lostpassword_url'),1);
+		add_filter('site_url',array('barbsecurity\LoginParameter', 'filter_site_url'),1);
 
-		//do not care second mistake
-		//add_filter('wp_login_errors',array('barbsecurity\LoginParameter', 'addParameterSecond'),1 ,2);
+		//add_filter('network_site_url',array('barbsecurity\LoginParameter', 'filter_network_site_url'),3); todo not tested
+
 	}
 
-	public static function addParameter($redirect){
+	public static function filter_login_url($login_url, $redirect, $force_reauth){
+		bp_log('filter_login_url');
+		return self::addParameter($login_url, $redirect, $force_reauth);
+	}
+
+	public static function filter_logout_redirect($redirect_to){
+		bp_log('filter_logout_redirect');
+		return self::addParameter($redirect_to);
+	}
+
+	public static function filter_lostpassword_redirect($lostpassword_redirect){
+		bp_log('filter_lostpassword_redirect');
+		return self::addParameter($lostpassword_redirect);
+	}
+
+	public static function filter_lostpassword_url($redirect){
+		bp_log('filter_lostpassword_url');
+		return self::addParameter($redirect);
+	}
+
+
+	public static function filter_site_url($url){
+		bp_log('filter_site_url');
+		if(strpos($url, 'action=lostpassword') !== false) {
+			// case action of lostpassword form
+			return self::addParameter($url);
+		}elseif(preg_match("/\/wp-login.php$/", $url)){
+			// case action of login form
+			return self::addParameter($url);
+		}else{
+			return $url;
+		}
+
+	}
+
+	public static function filter_network_site_url($url, $path, $scheme ){
+		bp_log('filter_network_site_url');
+		return self::addParameter($url, $path);
+	}
+
+
+	public static function addParameter($login_url, $redirect = '', $force_reauth = false) {
+		bp_log("login_url={$login_url}");
+		bp_log("redirect={$redirect}");
+		bp_log("force_reauth={$force_reauth}");
+
+		if(empty($login_url)){
+			$login_url = '/wp-login.php';
+		}
+
+
+		// case forth auth, redirect invalid(default) login page.
+		//if (!$force_reauth) {
 		$options = get_option(Version::$name);
 		$key = $options['param_name'];
 		$val = $options['param_value'];
-		$redirect .= strpos($redirect, '?') === false ? '?' : '&';
-		$redirect .= "{$key}={$val}";
-		return $redirect;
+		$login_url .= strpos($login_url, '?') === false ? '?' : '&';
+		$login_url .= "{$key}={$val}";
+		//}
+		return $login_url;
 	}
 
 /* never tested

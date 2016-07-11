@@ -69,14 +69,13 @@ function barb_security_login_init(){
             bp_log("2 case referer is wp-login.php");
             /**
              * リファラがwp-login.phpの場合はリファラかリクエストにパラメータがあることを確認する
-             * また、以下のGETパラメータが有る場合は無視する(logoutはログイン画面が表示されるので無視しない)
              */
-            $actions = array('postpass', 'lostpassword', 'retrievepassword', 'resetpass', 'rp');
-            if(isset($_GET['action']) && in_array($_GET['action'], $actions, true)){
-                return;
-            }
+            //$actions = array('postpass', 'lostpassword', 'retrievepassword', 'resetpass', 'rp');
+            //if(isset($_GET['action']) && in_array($_GET['action'], $actions, true)){
+            //    return;
+            //}
 
-            if(!LoginParameter::checkRefererParam() && !LoginParameter::checkGetParam()){
+            if(!LoginParameter::checkRefererParam() || !LoginParameter::checkGetParam()){
                 exit_403();
             }
         }else if(isset($_SERVER['HTTP_REFERER']) && strpos($_SERVER['HTTP_REFERER'],'/wp-admin/') !== false){
