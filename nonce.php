@@ -1,7 +1,8 @@
 <?php
 /*************** VERIFY THE NONCE AT LOGIN ***************/
-
+require_once dirname(__FILE__).'/LoginParameter.php';
 require_once dirname(__FILE__).'/Version.php';
+use barbsecurity\LoginParameter as LoginParameter;
 use barbsecurity\Version as Version;
 
 /**
