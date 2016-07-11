@@ -8,6 +8,8 @@ use barbsecurity\LoginParameter as LoginParameter;
 use barbsecurity\Version as Version;
 
 define('BARB_SECURITY_URL_REGEX', '/[^0-9a-zA-Z_-]/');
+define('BARB_DEBUG', false);
+
 
 /**
  * Add admin style/javascript
