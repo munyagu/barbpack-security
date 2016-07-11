@@ -93,6 +93,12 @@ class LoginParameter {
 		if(strpos($url, 'action=lostpassword') !== false) {
 			// case action of lostpassword form
 			return self::addParameter($url);
+		}elseif(strpos($url, 'action=rp') !== false) {
+			// case action of lostpassword message
+			return self::addParameter($url);
+		}elseif(strpos($url, 'action=resetpass') !== false) {
+			// case action of reset password form
+			return self::addParameter($url);
 		}elseif(preg_match("/\/wp-login.php$/", $url)){
 			// case action of login form
 			return self::addParameter($url);
