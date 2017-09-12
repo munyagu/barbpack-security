@@ -38,7 +38,7 @@ $options = get_option( Version::$name, array() );
                 <tr>
                     <th><?= __( 'parameter name', 'barbwire-security' ) ?></th>
                     <td>
-						<?php $value = ! empty( $_POST['param_name'] ) && $enable ? $_POST['param_name'] : $options['param_name']; ?>
+						<?php $value = ! empty( $_POST['param_name'] ) && $enable ? $_POST['param_name'] : isset($options['param_name']) ? $options['param_name'] : ''; ?>
                         <input type="text" name="param_name" placeholder="default:<?= LoginParameter::$key ?>"
                                value="<?= ! empty( $value ) ? $value : '' ?>" <?= $enable ? '' : 'readonly' ?>/><br/>
 						<?= __( 'Alphanumeric characters and hyphens, underscores only.', 'barbwire-security' ) ?>
@@ -47,7 +47,7 @@ $options = get_option( Version::$name, array() );
                 <tr>
                     <th><?= __( 'parameter value', 'barbwire-security' ) ?></th>
                     <td>
-						<?php $value = ! empty( $_POST['param_value'] ) && $enable ? $_POST['param_value'] : $options['param_value']; ?>
+						<?php $value = ! empty( $_POST['param_value'] ) && $enable ? $_POST['param_value'] : isset($options['param_value']) ? $options['param_value'] : ''; ?>
                         <input type="text" name="param_value" placeholder="default:<?= LoginParameter::$val ?>"
                                value="<?= ! empty( $value ) ? $value : '' ?>" <?= $enable ? '' : 'readonly' ?>/><br/>
 						<?= __( 'Alphanumeric characters and hyphens, underscores only.', 'barbwire-security' ) ?>
@@ -110,17 +110,6 @@ $options = get_option( Version::$name, array() );
                 </tr>
             </table>
             -->
-
-            <h3><?= __( 'REST API', 'barbwire-security' ) ?><a id="restapi" class="help_link" href="#"><img
-                            src="<?= plugins_url() . '/barbwire-security/img/question_icon.png' ?>"/></a></h3>
-            <table>
-                <tr>
-                    <th><?= __( 'Disable REST API', 'barbwire-security' ) ?></th>
-                    <td><label><input type="checkbox" name="disable_rest_api"
-                                      value="1" <?= isset( $options['disable_rest_api'] ) && $options['disable_rest_api'] == true ? "checked='checked'" : ''; ?>>enable</label>
-                    </td>
-                </tr>
-            </table>
 
             <div class="header_buttons">
                 <input type="submit" class="button button-primary button-large"

@@ -2,7 +2,6 @@
 require_once dirname( __FILE__ ) . '/Version.php';
 require_once WP_PLUGIN_DIR . '/barbwire-security/admin/settings.php';
 require_once dirname( __FILE__ ) . '/DisableXMLRPCPingBack.php';
-require_once dirname( __FILE__ ) . '/DisableRESTAPI.php';
 
 require_once dirname( __FILE__ ) . '/LoginParameter.php';
 require_once dirname( __FILE__ ) . '/AuthorArchive.php';

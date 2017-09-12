@@ -3,8 +3,8 @@ Contributors: munyagu
 Donate link: http://munyagu.com/donate/
 Tags: security,admin
 Requires at least: 3.8
-Tested up to: 4.8
-Stable tag: 1.2.1
+Tested up to: 4.8.1
+Stable tag: 1.3.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -110,3 +110,8 @@ Refactor source codes.
 
 = 1.2.1 =
 fix settings page duplication.
+
+= 1.3.0 =
+fix Remove Notice Error in setting page.
+Remove function of disabling REST API.
+ REST APIs are now commonly used with functions such as Gutenberg.

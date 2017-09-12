@@ -87,19 +87,6 @@ function barb_security_contextual_help( $help, $screen_id, $screen ) {
 		);
 		$screen->add_help_tab( $tab );
 
-		$content = '<p>';
-		$content .= __( 'If you don\'t need to use <a href="http://v2.wp-api.org/" target="blank">REST API</a> server, you should be desable this function.', 'barbwire-security' );
-		$content .= '<br />';
-		$content .= __( 'It is an unnecessary function for most user.', 'barbwire-security' );
-		$content .= '</p>';
-
-		$tab = array(
-			'title'   => __( 'Disable REST API', 'barbwire-security' ),
-			'id'      => 'restapi',
-			'content' => $content
-		);
-		$screen->add_help_tab( $tab );
-
 	}
 }
 
