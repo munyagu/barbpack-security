@@ -112,6 +112,7 @@ Refactor source codes.
 fix settings page duplication.
 
 = 1.3.0 =
+Specify support for version 4.8.1
 fix Remove Notice Error in setting page.
 Remove function of disabling REST API.
  REST APIs are now commonly used with functions such as Gutenberg.
