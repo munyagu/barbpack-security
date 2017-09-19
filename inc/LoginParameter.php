@@ -5,6 +5,7 @@ require_once dirname( __FILE__ ) . '/barb_libs.php';
 require_once dirname( __FILE__ ) . '/Version.php';
 
 use \BarbTool as BarbTool;
+use \BarbwireSecurity as BarbwireSecurity;
 
 /**
  * パラメータチェック用クラス
@@ -22,7 +23,7 @@ class LoginParameter {
 	 */
 	public static function checkGetParam() {
 		BarbTool::bp_log( "checkParam" );
-		$options = get_option( Version::$name );
+		$options = BarbwireSecurity::getOption();
 		$key     = $options['param_name'];
 		$val     = $options['param_value'];
 
@@ -39,7 +40,7 @@ class LoginParameter {
 	 */
 	public static function checkRefererParam() {
 		BarbTool::bp_log( "checkParam" );
-		$options = get_option( Version::$name );
+		$options = BarbwireSecurity::getOption();
 
 		$key = $options['param_name'];
 		$val = $options['param_value'];
@@ -151,7 +152,7 @@ class LoginParameter {
 
 		// case forth auth, redirect invalid(default) login page.
 		//if (!$force_reauth) {
-		$options = get_option( Version::$name );
+		$options = BarbwireSecurity::getOption();
 
 		if ( $options['parameter_enable'] == 1 ) {
 			$key = $options['param_name'];
@@ -169,7 +170,7 @@ class LoginParameter {
 	/* never tested
 		public static function addParameterSecond($errors, &$redirect_to){
 			if(count($errors) > 0){
-				$options = get_option(Version::$name);
+				$options = BarbwireSecurity::getOption();
 				$key = $options['param_name'];
 				$val = $options['param_value'];
 				$redirect_to .= strpos($redirect, '?') === false ? '?' : '&';

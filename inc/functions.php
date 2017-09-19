@@ -17,8 +17,7 @@ define( 'BARB_SECURITY_AUTHORITYSECURE', 'manage_options' );    //User level req
 define( 'BARB_SECURITY_SAVE_TRANSIENT', Version::$name . "_SAVE" );
 
 $version               = Version::getVersion();
-$barb_security_options = get_option( Version::$name, array() );
-
+$barb_security_options = BarbwireSecurity::getOption();
 function barb_security_plugins_loaded() {
 	$result = load_plugin_textdomain( Version::$name, false, Version::$name . '/languages' );
 }
@@ -91,8 +90,6 @@ add_action( 'secure_auth_redirect', 'barb_security_secure_auth_redirect' );
 /*************************************
  * ADMIN LOGIN PAGE URL PARAMETER
  *************************************/
-
-//$barb_security_options = get_option(Version::$name, array());
 /* If enable ADMIN LOGIN PAGE URL PARAMETER, initialize activate it.  */
 if ( isset( $barb_security_options['parameter_enable'] ) && $barb_security_options['parameter_enable'] == true ) {
 	LoginParameter::activate();
@@ -115,9 +112,14 @@ if ( isset( $barb_security_options['pingback_suppress_enable'] ) && $barb_securi
 /*************************************
  * DISABLE REST API
  *************************************/
-if ( isset( $barb_security_options['disable_rest_api'] ) && $barb_security_options['disable_rest_api'] == true ) {
+if ( isset( $barb_security_options['disable_rest_api'] ) && $barb_security_options['disable_rest_api'] == 2 ) {
 	DisableRESTAPI::activate();
 }
+
+if ( isset( $barb_security_options['disable_rest_api'] ) && $barb_security_options['disable_rest_api'] == 1 ) {
+	DisableRESTAPI::activateAuth();
+}
+
 
 /*************** OTHER ***************/
 
