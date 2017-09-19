@@ -18,15 +18,17 @@ $options = get_option( Version::$name, array() );
                    value="<?= __( 'save', 'barbwire-security' ) ?>"/>
         </div>
         <div id="settings">
-            <h3><?= __( 'ADMIN LOGIN PAGE URL PARAMETER', 'barbwire-security' ); ?><a id="login_parameter" class="help_link"
-                                                                                 href="#"><img
+            <h3><?= __( 'ADMIN LOGIN PAGE URL PARAMETER', 'barbwire-security' ); ?><a id="login_parameter"
+                                                                                      class="help_link"
+                                                                                      href="#"><img
                             src="<?= plugins_url() . '/barbwire-security/img/question_icon.png' ?>"/></a></h3>
 			<?php
 			$enable = isset( $options['parameter_enable'] ) && $options['parameter_enable'] == true;
 			?>
             <p><?= __( 'Login URL is', 'barbwire-security' ) ?> <input id="login_url" type="text"
-                                                                  value="<?= wp_login_url() ?>" onclick="this.select()"
-                                                                  readonly="readonly"/></p>
+                                                                       value="<?= wp_login_url() ?>"
+                                                                       onclick="this.select()"
+                                                                       readonly="readonly"/></p>
             <table>
                 <tr>
                     <th><?= __( 'enable login url parameter function', 'barbwire-security' ) ?></th>
@@ -38,7 +40,7 @@ $options = get_option( Version::$name, array() );
                 <tr>
                     <th><?= __( 'parameter name', 'barbwire-security' ) ?></th>
                     <td>
-						<?php $value = ! empty( $_POST['param_name'] ) && $enable ? $_POST['param_name'] : isset($options['param_name']) ? $options['param_name'] : ''; ?>
+						<?php $value = isset( $_POST['param_name'] ) && ! empty( $_POST['param_name'] ) && $enable ? $_POST['param_name'] : $options['param_name']; ?>
                         <input type="text" name="param_name" placeholder="default:<?= LoginParameter::$key ?>"
                                value="<?= ! empty( $value ) ? $value : '' ?>" <?= $enable ? '' : 'readonly' ?>/><br/>
 						<?= __( 'Alphanumeric characters and hyphens, underscores only.', 'barbwire-security' ) ?>
@@ -47,7 +49,7 @@ $options = get_option( Version::$name, array() );
                 <tr>
                     <th><?= __( 'parameter value', 'barbwire-security' ) ?></th>
                     <td>
-						<?php $value = ! empty( $_POST['param_value'] ) && $enable ? $_POST['param_value'] : isset($options['param_value']) ? $options['param_value'] : ''; ?>
+						<?php $value = isset( $_POST['param_value'] ) && ! empty( $_POST['param_value'] ) && $enable ? $_POST['param_value'] : $options['param_value']; ?>
                         <input type="text" name="param_value" placeholder="default:<?= LoginParameter::$val ?>"
                                value="<?= ! empty( $value ) ? $value : '' ?>" <?= $enable ? '' : 'readonly' ?>/><br/>
 						<?= __( 'Alphanumeric characters and hyphens, underscores only.', 'barbwire-security' ) ?>
@@ -110,6 +112,17 @@ $options = get_option( Version::$name, array() );
                 </tr>
             </table>
             -->
+
+            <h3><?= __( 'REST API', 'barbwire-security' ) ?><a id="restapi" class="help_link" href="#"><img
+                            src="<?= plugins_url() . '/barbwire-security/img/question_icon.png' ?>"/></a></h3>
+            <table>
+                <tr>
+                    <th><?= __( 'Disable REST API', 'barbwire-security' ) ?></th>
+                    <td><label><input type="checkbox" name="disable_rest_api"
+                                      value="1" <?= isset( $options['disable_rest_api'] ) && $options['disable_rest_api'] == true ? "checked='checked'" : ''; ?>>enable</label>
+                    </td>
+                </tr>
+            </table>
 
             <div class="header_buttons">
                 <input type="submit" class="button button-primary button-large"
