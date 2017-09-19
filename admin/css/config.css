@@ -4,6 +4,8 @@
 
 #secure table {
     border-collapse: collapse;
+    font-size: 0.9em;
+    line-height: 1.8;
 }
 
 #secure table tr th,

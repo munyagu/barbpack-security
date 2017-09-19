@@ -18,7 +18,7 @@ if ( ! defined( 'BARB_DEBUG' ) ) {
  */
 function barb_security_admin_print_scripts() {
 	BarbTool::bp_log( "barb_security_admin_print_scripts" );
-	wp_enqueue_style( 'barb_security_admin_style', plugins_url() . '/barbwire-security/css/config.css' );
+	wp_enqueue_style( 'barb_security_admin_style', plugins_url() . '/barbwire-security/admin/css/config.css' );
 	wp_enqueue_script( 'barb_security_admin_script', plugins_url() . '/barbwire-security/js/config.js', array( 'jquery' ) );
 }
 
@@ -27,6 +27,15 @@ function barb_security_admin_print_scripts() {
  */
 function barb_security_admin_menu() {
 	BarbTool::bp_log( "barb_security_admin_menu" );
+
+	$hook = add_options_page( __( 'Barbwire Security Setting', 'barbwire-security' ),
+		__( 'Barbwire Security', 'barbwire-security' ),
+		BARB_SECURITY_AUTHORITYSECURE,
+		'barb_secure_settings',
+		'barb_disp_secure_settings'
+	);
+
+	/*
 	$hook = add_menu_page(
 		__( 'Barbwire Security Setting', 'barbwire-security' ),
 		__( 'Barbwire Security', 'barbwire-security' ),
@@ -35,7 +44,9 @@ function barb_security_admin_menu() {
 		'barb_disp_secure_settings',
 		'dashicons-lock'
 	);
+*/
 	add_action( "admin_print_scripts-$hook", 'barb_security_admin_print_scripts' );
+
 }
 
 add_action( 'admin_menu', 'barb_security_admin_menu' );
@@ -44,7 +55,7 @@ add_action( 'admin_menu', 'barb_security_admin_menu' );
  * Add help to setting page
  */
 function barb_security_contextual_help( $help, $screen_id, $screen ) {
-	if ( $screen_id == 'toplevel_page_barb_secure_settings' ) {
+	if ( $screen_id == 'settings_page_barb_secure_settings' ) {
 
 		$content = '<p>';
 		$content .= __( 'You can ward off tying for try to login for cracking, such as Brute-force attack.', 'barbwire-security' );
@@ -81,8 +92,21 @@ function barb_security_contextual_help( $help, $screen_id, $screen ) {
 		$content .= '</p>';
 
 		$tab = array(
-			'title'   => __( 'Suppress XML-RPC Pingback function', 'barbwire-security' ),
+			'title'   => __( 'Restrict XML-RPC Pingback function', 'barbwire-security' ),
 			'id'      => 'pingback',
+			'content' => $content
+		);
+		$screen->add_help_tab( $tab );
+
+		$content = '<p>';
+		$content .= __( '\'REST\' is REpresentational State Transfer function.<br>It is simple http request and respons API.', 'barbwire-security' ) . '<br>';
+		$content .= __( 'It has been incorporated into the WordPress core since version 4.7 and is used in several functions.', 'barbwire-security' ) . '<br>';
+		$content .= __( 'If you don\'t need to use server, you should be desable this function.', 'barbwire-security' ) . '<br>';
+		$content .= '</p>';
+
+		$tab = array(
+			'title'   => __( 'Disable REST API', 'barbwire-security' ),
+			'id'      => 'restapi',
 			'content' => $content
 		);
 		$screen->add_help_tab( $tab );
@@ -156,7 +180,7 @@ function barb_security_admin_init() {
 		$options['pingback_suppress_enable'] = isset( $_POST['pingback_suppress_enable'] ) && $_POST['pingback_suppress_enable'] == 1 ? true : false;
 
 		/* REST API */
-		$options['disable_rest_api'] = isset( $_POST['disable_rest_api'] ) && $_POST['disable_rest_api'] == 1 ? true : false;
+		$options['disable_rest_api'] = isset( $_POST['disable_rest_api'] ) ? $_POST['disable_rest_api']  : 0;
 
 		/* CAPTCHA */
 		/* TODO Unimplemented
@@ -169,7 +193,7 @@ function barb_security_admin_init() {
 			return;
 		}
 
-		if ( get_option( Version::$name, null ) === null ) {
+		if ( BarbwireSecurity::getOption() === null ) {
 			add_option( Version::$name, $options, '', 'no' );
 			$messages->add( 'info', __( 'registered', 'barbwire-security' ) );
 		} else {

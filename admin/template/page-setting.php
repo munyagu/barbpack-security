@@ -4,7 +4,7 @@ require_once WP_PLUGIN_DIR . '/barbwire-security/inc/LoginParameter.php';
 use barbsecurity\Version as Version;
 use barbsecurity\LoginParameter as LoginParameter;
 
-$options = get_option( Version::$name, array() );
+$options = BarbwireSecurity::getOption();
 ?>
 <div class="wrap">
     <div class="wrap">
@@ -26,7 +26,7 @@ $options = get_option( Version::$name, array() );
 			$enable = isset( $options['parameter_enable'] ) && $options['parameter_enable'] == true;
 			?>
             <p><?= __( 'Login URL is', 'barbwire-security' ) ?> <input id="login_url" type="text"
-                                                                       value="<?= wp_login_url() ?>"
+                                                                       value="<?php echo wp_login_url() ?>"
                                                                        onclick="this.select()"
                                                                        readonly="readonly"/></p>
             <table>
@@ -117,9 +117,22 @@ $options = get_option( Version::$name, array() );
                             src="<?= plugins_url() . '/barbwire-security/img/question_icon.png' ?>"/></a></h3>
             <table>
                 <tr>
-                    <th><?= __( 'Disable REST API', 'barbwire-security' ) ?></th>
-                    <td><label><input type="checkbox" name="disable_rest_api"
-                                      value="1" <?= isset( $options['disable_rest_api'] ) && $options['disable_rest_api'] == true ? "checked='checked'" : ''; ?>>enable</label>
+                    <th><?php echo __( 'Disable REST API', 'barbwire-security' ) ?></th>
+                    <td>
+						<?php
+						$rest_api_value = 0;
+						if ( isset( $options['disable_rest_api'] ) && ! empty( $options['disable_rest_api'] ) ) {
+							$rest_api_value = (int) $options['disable_rest_api'];
+						}
+						?>
+                        <!-- <label><input type="checkbox" name="disable_rest_api"
+                                      value="1" <?= isset( $options['disable_rest_api'] ) && $options['disable_rest_api'] == true ? "checked='checked'" : ''; ?>>enable</label> -->
+                        <label><input type="radio" name="disable_rest_api"
+                                      value="0"<?php echo $rest_api_value === 0 ? ' checked="checked"' : ''; ?>><?php echo __('Enable REST API(WordPress default)') ?>)</label><br>
+                        <label><input type="radio" name="disable_rest_api"
+                                      value="1"<?php echo $rest_api_value === 1 ? ' checked="checked"' : ''; ?>><?php echo __('Disable Anonymous REST request.') ?></label><br>
+                        <label><input type="radio" name="disable_rest_api"
+                                      value="2"<?php echo $rest_api_value === 2 ? ' checked="checked"' : ''; ?>><?php echo __('Disable All REST request.')?></label>
                     </td>
                 </tr>
             </table>
