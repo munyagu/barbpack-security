@@ -1,4 +1,5 @@
 <?php
+
 /*
 Plugin Name: Barbwire Security
 Plugin URI: http://barbwire.co.jp/plugin/barb-pack
@@ -10,51 +11,67 @@ Text Domain:barbwire-security
 Domain Path: /languages/
  */
 
-define( 'BARB_SECURITY_VERSION', '1.2.1' );
+define( 'BARBWIRE_SECURITY_VERSION', '1.2.1' );
 
 require_once dirname( __FILE__ ) . '/inc/functions.php';
-require_once dirname( __FILE__ ) . '/inc/barb_libs.php';
 require_once dirname( __FILE__ ) . '/inc/Version.php';
 
 use barbsecurity\Version as Version;
 
 class BarbwireSecurity {
 
-	private static $defaultOptionValue = array(
-		'parameter_enable' => false,
-		'param_name' => 'secure',
-		'param_value' => 'true',
-		'block_author_archive' => false,
+	/**
+	 * Default option values
+	 *
+	 * @var array
+	 */
+	private static $default_option_value = array(
+		'parameter_enable'         => false,
+		'param_name'               => '',
+		'param_value'              => '',
+		'block_author_archive'     => false,
 		'pingback_suppress_enable' => false,
-		'disable_rest_api' => 0
+		'disable_rest_api'         => 0,
+		'specified_end_point'      => false,
+		'end_points'               => '',
 
 	);
 
-	private static $option = array();
 
-	public static function getOption(){
-		if(empty(self::$option)){
-			self::$option = get_option( Version::$name, BarbwireSecurity::$defaultOptionValue );
-		}
-		return self::$option;
+	/**
+	 * Get option setting from Database
+	 *
+	 * @return mixed options
+	 */
+	public static function get_option() {
+		return get_option( Version::$name, self::$default_option_value );
 	}
 
 	/**
-	 * プラグインが有効化された際の処理
+	 * Update option setting
+	 *
+	 * @param mixed $options settings.
+	 */
+	public static function update_option( $options ) {
+		update_option( Version::$name, $options );
+	}
+
+	/**
+	 * Activation hook
 	 */
 	function barb_security_register_activation_hook() {
 
 	}
 
 	/**
-	 * プラグインが無効化された際の処理
+	 * Deactivation hook
 	 */
 	function barb_security_register_deactivation_hook() {
 
 	}
 
 	/**
-	 * プラグインが削除された際の処理
+	 * Uninstall hook
 	 */
 	function barb_security_uninstall() {
 		delete_option( Version::$name );

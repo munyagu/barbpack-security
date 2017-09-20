@@ -1,10 +1,8 @@
 <?php
 namespace barbsecurity;
 
-require_once dirname( __FILE__ ) . '/barb_libs.php';
 require_once dirname( __FILE__ ) . '/Version.php';
 
-use \BarbTool as BarbTool;
 use \BarbwireSecurity as BarbwireSecurity;
 
 /**
@@ -22,12 +20,11 @@ class LoginParameter {
 	 * @return bool
 	 */
 	public static function checkGetParam() {
-		BarbTool::bp_log( "checkParam" );
-		$options = BarbwireSecurity::getOption();
+		$options = BarbwireSecurity::get_option();
 		$key     = $options['param_name'];
 		$val     = $options['param_value'];
 
-		if ( ! isset( $_GET[ $key ] ) || $_GET[ $key ] != $val ) {
+		if ( ! isset( $_GET[ $key ] ) || $_GET[ $key ] !== $val ) {
 			return false;
 		} else {
 			return true;
@@ -39,8 +36,7 @@ class LoginParameter {
 	 * @return bool
 	 */
 	public static function checkRefererParam() {
-		BarbTool::bp_log( "checkParam" );
-		$options = BarbwireSecurity::getOption();
+		$options = BarbwireSecurity::get_option();
 
 		$key = $options['param_name'];
 		$val = $options['param_value'];
@@ -55,7 +51,6 @@ class LoginParameter {
 
 
 	public static function activate() {
-		BarbTool::bp_log( "activeteLoginParameter" );
 
 		add_filter( 'login_url', array( 'barbsecurity\LoginParameter', 'filter_login_url' ), 1, 3 );
 		add_filter( 'logout_redirect', array( 'barbsecurity\LoginParameter', 'filter_logout_redirect' ), 1 );
@@ -73,10 +68,9 @@ class LoginParameter {
 
 
 	public static function filter_login_url( $login_url, $redirect, $force_reauth ) {
-		BarbTool::bp_log( 'filter_login_url' );
 
 		// not login or redirect login url
-		// refer to wordpress/wordpress/wp-includes/canonical.php wp_redirect_admin_locations
+		/* refer to wordpress/wordpress/wp-includes/canonical.php wp_redirect_admin_locations */
 		if ( ! is_user_logged_in() ) {
 			$logins = array(
 				home_url( 'wp-admin', 'relative' ),
@@ -95,26 +89,20 @@ class LoginParameter {
 	}
 
 	public static function filter_logout_redirect( $redirect_to ) {
-		BarbTool::bp_log( 'filter_logout_redirect' );
-
 		return self::addParameter( $redirect_to );
 	}
 
 	public static function filter_lostpassword_redirect( $lostpassword_redirect ) {
-		BarbTool::bp_log( 'filter_lostpassword_redirect' );
-
 		return self::addParameter( $lostpassword_redirect );
 	}
 
 	public static function filter_lostpassword_url( $redirect ) {
-		BarbTool::bp_log( 'filter_lostpassword_url' );
-
 		return self::addParameter( $redirect );
 	}
 
 
 	public static function filter_site_url( $url ) {
-		BarbTool::bp_log( 'filter_site_url' );
+
 		if ( strpos( $url, 'action=lostpassword' ) !== false ) {
 			// case action of lostpassword form
 			return self::addParameter( $url );
@@ -134,17 +122,11 @@ class LoginParameter {
 	}
 
 	public static function filter_network_site_url( $url, $path, $scheme ) {
-		BarbTool::bp_log( 'filter_network_site_url' );
-
 		return self::addParameter( $url, $path );
 	}
 
 
 	public static function addParameter( $login_url, $redirect = '', $force_reauth = false ) {
-		BarbTool::bp_log( "login_url={$login_url}" );
-		BarbTool::bp_log( "redirect={$redirect}" );
-		BarbTool::bp_log( "force_reauth={$force_reauth}" );
-
 		if ( empty( $login_url ) ) {
 			$login_url = '/wp-login.php';
 		}
@@ -152,7 +134,7 @@ class LoginParameter {
 
 		// case forth auth, redirect invalid(default) login page.
 		//if (!$force_reauth) {
-		$options = BarbwireSecurity::getOption();
+		$options = BarbwireSecurity::get_option();
 
 		if ( $options['parameter_enable'] == 1 ) {
 			$key = $options['param_name'];
