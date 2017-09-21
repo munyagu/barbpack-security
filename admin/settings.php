@@ -212,9 +212,9 @@ function barbwire_security_admin_init() {
 		BarbwireSecurity::update_option( $options );
 
 		if ( $options['parameter_enable'] ) {
-			add_filter( 'login_url', array( 'barbsecurity\LoginParameter', 'addParameter' ), 1 );
+			add_filter( 'login_url', array( 'barbsecurity\LoginParameter', 'add_parameter' ), 1 );
 		} else {
-			remove_filter( 'login_url', array( 'barbsecurity\LoginParameter', 'addParameter' ), 1 );
+			remove_filter( 'login_url', array( 'barbsecurity\LoginParameter', 'add_parameter' ), 1 );
 		}
 
 		delete_transient( BARB_SECURITY_SAVE_TRANSIENT );

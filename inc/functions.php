@@ -34,7 +34,7 @@ function barb_security_login_init() {
 		// リファラが空の場合はGETにパラメータがあることをチェックする
 		if ( ! isset( $_SERVER['HTTP_REFERER'] ) ) {
 			// check get parameter case referer is empty
-			if ( ! LoginParameter::checkGetParam() ) {
+			if ( ! LoginParameter::check_get_param() ) {
 				exit_404();
 			}
 		} else if ( isset( $_SERVER['HTTP_REFERER'] ) && strpos( $_SERVER['HTTP_REFERER'], '/wp-login.php' ) !== false ) {
@@ -46,7 +46,7 @@ function barb_security_login_init() {
 			//    return;
 			//}
 
-			if ( ! LoginParameter::checkRefererParam() || ! LoginParameter::checkGetParam() ) {
+			if ( ! LoginParameter::check_referer_param() || ! LoginParameter::check_get_param() ) {
 				exit_404();
 			}
 		} else if ( isset( $_SERVER['HTTP_REFERER'] ) && strpos( $_SERVER['HTTP_REFERER'], '/wp-admin/' ) !== false ) {
@@ -54,7 +54,7 @@ function barb_security_login_init() {
 			return true;
 		} else if ( isset( $_SERVER['HTTP_REFERER'] ) ) {
 			// それ以外のリファラでGETにパラメータがあることをチェックする
-			if ( ! LoginParameter::checkGetParam() ) {
+			if ( ! LoginParameter::check_get_param() ) {
 				exit_404();
 			}
 		} else {

@@ -36,7 +36,7 @@ class AuthorArchive {
 		} else {
 			return $location;
 		}
-		return;
+		return '';
 	}
 
 }

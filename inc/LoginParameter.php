@@ -1,4 +1,5 @@
 <?php
+
 namespace barbsecurity;
 
 require_once dirname( __FILE__ ) . '/Version.php';
@@ -12,14 +13,26 @@ use \BarbwireSecurity as BarbwireSecurity;
  */
 class LoginParameter {
 
+	/**
+	 * Default parameter key name
+	 *
+	 * @var string
+	 */
 	public static $key = 'secure';
+
+	/**
+	 * Default parameter value name
+	 *
+	 * @var string
+	 */
 	public static $val = 'true';
 
 	/**
-	 * GETリクエストにパラメータが含まれるかどうかをチェックする
+	 * Check GET parameter in login access
+	 *
 	 * @return bool
 	 */
-	public static function checkGetParam() {
+	public static function check_get_param() {
 		$options = BarbwireSecurity::get_option();
 		$key     = $options['param_name'];
 		$val     = $options['param_value'];
@@ -32,16 +45,17 @@ class LoginParameter {
 	}
 
 	/**
-	 * リファラにパラメータが含まれるかどうかをチェックする
+	 * Check referer parameter in login access
+	 *
 	 * @return bool
 	 */
-	public static function checkRefererParam() {
+	public static function check_referer_param() {
 		$options = BarbwireSecurity::get_option();
 
 		$key = $options['param_name'];
 		$val = $options['param_value'];
 
-		if ( strpos( $_SERVER['HTTP_REFERER'], ( urlencode( $key ) . '=' . urlencode( $val ) ) ) !== false ) {
+		if ( strpos( $_SERVER['HTTP_REFERER'], ( rawurlencode( $key ) . '=' . rawurlencode( $val ) ) ) !== false ) {
 			return true;
 		} else {
 			return false;
@@ -49,24 +63,31 @@ class LoginParameter {
 
 	}
 
-
+	/**
+	 * Activate Login parameter check
+	 */
 	public static function activate() {
 
 		add_filter( 'login_url', array( 'barbsecurity\LoginParameter', 'filter_login_url' ), 1, 3 );
 		add_filter( 'logout_redirect', array( 'barbsecurity\LoginParameter', 'filter_logout_redirect' ), 1 );
 		add_filter( 'lostpassword_redirect', array(
 			'barbsecurity\LoginParameter',
-			'filter_lostpassword_redirect'
+			'filter_lostpassword_redirect',
 		), 1 );
 		add_filter( 'lostpassword_url', array( 'barbsecurity\LoginParameter', 'filter_lostpassword_url' ), 1 );
 		add_filter( 'site_url', array( 'barbsecurity\LoginParameter', 'filter_site_url' ), 1 );
 
-
-		//add_filter('network_site_url',array('barbsecurity\LoginParameter', 'filter_network_site_url'),3); todo not tested
-
 	}
 
-
+	/**
+	 * Disable redirection to login url
+	 *
+	 * @param string $login_url The login URL. Not HTML-encoded.
+	 * @param string $redirect The path to redirect to on login, if supplied.
+	 * @param bool   $force_reauth Whether to force re authorization, even if a cookie is present.
+	 *
+	 * @return string
+	 */
 	public static function filter_login_url( $login_url, $redirect, $force_reauth ) {
 
 		// not login or redirect login url
@@ -80,60 +101,91 @@ class LoginParameter {
 				home_url( 'login', 'relative' ),
 			);
 
-			if ( in_array( untrailingslashit( $_SERVER['REQUEST_URI'] ), $logins ) ) {
+			if ( in_array( untrailingslashit( $_SERVER['REQUEST_URI'] ), $logins, true ) ) {
 				exit_404();
 			}
 		}
 
-		return self::addParameter( $login_url, $redirect, $force_reauth );
+		return self::add_parameter( $login_url, $redirect, $force_reauth );
 	}
 
+	/**
+	 * Redirect to chenged url after logout
+	 *
+	 * @param string $redirect_to original logout url.
+	 *
+	 * @return string
+	 */
 	public static function filter_logout_redirect( $redirect_to ) {
-		return self::addParameter( $redirect_to );
+		return self::add_parameter( $redirect_to );
 	}
 
+	/**
+	 * Redirect to chenged url of lost password page
+	 *
+	 * @param string $lostpassword_redirect original logout url.
+	 *
+	 * @return string
+	 */
 	public static function filter_lostpassword_redirect( $lostpassword_redirect ) {
-		return self::addParameter( $lostpassword_redirect );
+		return self::add_parameter( $lostpassword_redirect );
 	}
 
-	public static function filter_lostpassword_url( $redirect ) {
-		return self::addParameter( $redirect );
+	/**
+	 * Change the Lost Password URL.
+	 *
+	 * @param string $lostpassword_url The lost password page URL.
+	 *
+	 * @return string
+	 */
+	public static function filter_lostpassword_url( $lostpassword_url ) {
+		return self::add_parameter( $lostpassword_url );
 	}
 
 
+	/**
+	 * Change site url
+	 *
+	 * @param string $url     The complete site URL including scheme and path.
+	 *
+	 * @return string
+	 */
 	public static function filter_site_url( $url ) {
 
 		if ( strpos( $url, 'action=lostpassword' ) !== false ) {
-			// case action of lostpassword form
-			return self::addParameter( $url );
+			// case action of lostpassword form.
+			return self::add_parameter( $url );
 		} elseif ( strpos( $url, 'action=rp' ) !== false ) {
-			// case action of lostpassword message
-			return self::addParameter( $url );
+			// case action of lostpassword message.
+			return self::add_parameter( $url );
 		} elseif ( strpos( $url, 'action=resetpass' ) !== false ) {
-			// case action of reset password form
-			return self::addParameter( $url );
-		} elseif ( preg_match( "/\/wp-login.php$/", $url ) ) {
-			// case action of login form
-			return self::addParameter( $url );
+			// case action of reset password form.
+			return self::add_parameter( $url );
+		} elseif ( preg_match( '/\/wp-login.php$/', $url ) ) {
+			// case action of login form.
+			return self::add_parameter( $url );
 		} else {
 			return $url;
 		}
 
 	}
 
-	public static function filter_network_site_url( $url, $path, $scheme ) {
-		return self::addParameter( $url, $path );
-	}
 
-
-	public static function addParameter( $login_url, $redirect = '', $force_reauth = false ) {
+	/**
+	 * Add parameter to login url
+	 *
+	 * @param string $login_url original login url.
+	 * @param string $redirect TODO UNUSED.
+	 * @param bool   $force_reauth TODO UNUSED.
+	 *
+	 * @return string
+	 */
+	public static function add_parameter( $login_url, $redirect = '', $force_reauth = false ) {
 		if ( empty( $login_url ) ) {
 			$login_url = '/wp-login.php';
 		}
 
-
 		// case forth auth, redirect invalid(default) login page.
-		//if (!$force_reauth) {
 		$options = BarbwireSecurity::get_option();
 
 		if ( $options['parameter_enable'] == 1 ) {
@@ -145,7 +197,6 @@ class LoginParameter {
 			}
 		}
 
-		//}
 		return $login_url;
 	}
 

@@ -18,8 +18,6 @@ class DisableRESTAPI {
 	 */
 	public static function activate() {
 
-		$option = BarbwireSecurity::get_option();
-
 		if ( defined( 'JSON_API_VERSION' ) && version_compare( JSON_API_VERSION, '2.0', '<' ) ) {
 			add_filter( 'json_enabled', '__return_false' );
 			add_filter( 'json_jsonp_enabled', '__return_false' );
@@ -44,10 +42,15 @@ class DisableRESTAPI {
 	public static function activate_auth() {
 		add_filter( 'rest_authentication_errors', function () {
 			if ( ! is_user_logged_in() ) {
-				return new WP_Error( 'rest_not_logged_in', 'You are not currently logged in.', array( 'status' => 401 ) );
+				return new WP_Error(
+					'rest_not_logged_in',
+					'You are not currently logged in.',
+					array(
+						'status' => 401,
+					)
+				);
 			}
 		} );
 	}
-
 
 }
