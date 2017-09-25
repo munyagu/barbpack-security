@@ -4,8 +4,11 @@
 
 #secure table {
     border-collapse: collapse;
+    line-height: 1.6;
+}
+
+#secure table th {
     font-size: 0.9em;
-    line-height: 1.8;
 }
 
 #secure table tr th,
@@ -15,11 +18,11 @@
     padding: 5px;
 }
 
-#secure table tr th{
+#secure table tr th {
     width: 200px;
 }
 
-#secure table tr td{
+#secure table tr td {
     width: 400px;
 }
 
@@ -41,12 +44,41 @@
     opacity: 0.5;
 }
 
+#secure #rest_api_settings div {
+    margin-bottom: 8px;
+}
+
+#secure #examples_installed {
+    display: none;
+}
+#secure #examples {
+    display: none;
+}
+
+#secure #end_point_list {
+    font-size: 0.9em;
+}
+
+#secure #end_point_list input[type=text] {
+    opacity: 1;
+    width: 100%;
+}
+
+#secure #end_point_list td {
+    border: 0;
+    padding: 0;
+}
+
+#secure #end_point_list td:first-child {
+    padding-right: 4px;
+}
+
 #secure a.help_link {
     margin: auto 5px;
 }
 
 #login_url {
     opacity: 1;
-    width:500px;
+    width: 500px;
     border: none;
 }

@@ -5,11 +5,13 @@ require_once dirname( __FILE__ ) . '/DisableXMLRPCPingBack.php';
 
 require_once dirname( __FILE__ ) . '/LoginParameter.php';
 require_once dirname( __FILE__ ) . '/AuthorArchive.php';
+require_once dirname( __FILE__ ) . '/DisableRESTAPI.php';
 
 use barbsecurity\Version as Version;
 use barbsecurity\LoginParameter as LoginParameter;
 use barbsecurity\AuthorArchive as AuthorArchive;
 use barbsecurity\DisableRESTAPI as DisableRESTAPI;
+use barbsecurity\DisableXMLRPCPingBack as DisableXMLRPCPingBack;
 
 define( 'BARB_SECURITY_AUTHORITYSECURE', 'manage_options' );    //User level required in order to change the settings.
 define( 'BARB_SECURITY_SAVE_TRANSIENT', Version::$name . "_SAVE" );
@@ -105,11 +107,25 @@ if ( isset( $barb_security_options['pingback_suppress_enable'] ) && $barb_securi
 /*************************************
  * DISABLE REST API
  *************************************/
-if ( isset( $barb_security_options['disable_rest_api'] ) && $barb_security_options['disable_rest_api'] == 2 ) {
+// specified end point.
+
+$barb_security_rest_prefix = rest_get_url_prefix();
+$barb_security_rest_specified_end_point = false;
+
+
+foreach ( $barb_security_options['end_points'] as $end_points ) {
+	$barb_security_end_point_uri = '/' . $barb_security_rest_prefix . '/' . $end_points;
+
+	if ( strpos( $_SERVER['REQUEST_URI'], $barb_security_end_point_uri ) === 0 ) {
+		$barb_security_rest_specified_end_point = true;
+	}
+}
+
+if ( isset( $barb_security_options['disable_rest_api'] ) && $barb_security_options['disable_rest_api'] == 2 && ! $barb_security_rest_specified_end_point) {
 	DisableRESTAPI::activate();
 }
 
-if ( isset( $barb_security_options['disable_rest_api'] ) && $barb_security_options['disable_rest_api'] == 1 ) {
+if ( isset( $barb_security_options['disable_rest_api'] ) && $barb_security_options['disable_rest_api'] == 1  && ! $barb_security_rest_specified_end_point ) {
 	DisableRESTAPI::activate_auth();
 }
 

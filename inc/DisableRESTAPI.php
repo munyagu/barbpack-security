@@ -50,7 +50,26 @@ class DisableRESTAPI {
 					)
 				);
 			}
+
+			return null;
 		} );
+	}
+
+	/**
+	 * Always return error at check_authentication.
+	 * It always called in serve_request rest api version 2.0.
+	 *
+	 * @return \WP_Error
+	 */
+	public static function rest_authentication_errors() {
+
+		if ( function_exists( 'rest_authorization_required_code' ) ) {
+			$error_code = rest_authorization_required_code();
+		} else {
+			$error_code = 401;
+		}
+
+		return new \WP_Error( 'rest_authentication_error', __( 'You are not authenticated.' ), array( 'status' => $error_code ) );
 	}
 
 }

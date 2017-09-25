@@ -1,5 +1,7 @@
 <?php
 
+namespace barbsecurity;
+
 /**
  * Class DisableXMLRPCPingBack
  * remove pingback functions
@@ -11,8 +13,8 @@ class DisableXMLRPCPingBack {
 	 * activate disnable xmlrpc ping-back and remove X-Pingback header
 	 */
 	public static function activate() {
-		add_filter( 'xmlrpc_methods', array( 'DisableXMLRPCPingBack', 'disnable_ping_back' ), 1, 1 );
-		add_filter( 'wp_headers', array( 'DisableXMLRPCPingBack', 'remove_XPingback_header' ), 1, 1 );
+		add_filter( 'xmlrpc_methods', array( 'barbsecurity\DisableXMLRPCPingBack', 'disnable_ping_back' ), 1, 1 );
+		add_filter( 'wp_headers', array( 'barbsecurity\DisableXMLRPCPingBack', 'remove_XPingback_header' ), 1, 1 );
 	}
 
 	/**

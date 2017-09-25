@@ -4,14 +4,11 @@
  *************************************/
 require_once WP_PLUGIN_DIR . '/barbwire-security/inc/LoginParameter.php';
 require_once WP_PLUGIN_DIR . '/barbwire-security/inc/Version.php';
+
 use barbsecurity\LoginParameter as LoginParameter;
 use barbsecurity\Version as Version;
 
 define( 'BARB_SECURITY_URL_REGEX', '/[^0-9a-zA-Z_-]/' );
-if ( ! defined( 'BARB_DEBUG' ) ) {
-	define( 'BARB_DEBUG', false );
-}
-
 
 /**
  * Add admin style/javascript
@@ -19,7 +16,7 @@ if ( ! defined( 'BARB_DEBUG' ) ) {
 function barb_security_admin_print_scripts() {
 
 	wp_enqueue_style( 'barb_security_admin_style', plugins_url() . '/barbwire-security/admin/css/config.css' );
-	wp_enqueue_script( 'barb_security_admin_script', plugins_url() . '/barbwire-security/js/config.js', array( 'jquery' ) );
+	wp_enqueue_script( 'barb_security_admin_script', plugins_url() . '/barbwire-security/admin/js/config.js', array( 'jquery' ) );
 }
 
 /**
@@ -43,8 +40,8 @@ add_action( 'admin_menu', 'barbwire_security_admin_menu' );
 /**
  * Add help to setting page
  *
- * @param string    $help Help text that appears on the screen.
- * @param string    $screen_id Screen ID.
+ * @param string $help Help text that appears on the screen.
+ * @param string $screen_id Screen ID.
  * @param WP_Screen $screen Current WP_Screen instance.
  */
 function barbwire_security_contextual_help( $help, $screen_id, $screen ) {
@@ -54,6 +51,8 @@ function barbwire_security_contextual_help( $help, $screen_id, $screen ) {
 		$content .= __( 'You can ward off tying for try to login for cracking, such as Brute-force attack.', 'barbwire-security' );
 		$content .= '<br />';
 		$content .= __( 'Adding any parameter to login URL so that login screen will hidden.', 'barbwire-security' );
+		$content .= '<br />';
+		$content .= __( 'It also prevents direct access to /wp-admin/ page etc.', 'barbwire-security' );
 		$content .= '</p>';
 
 		$tab = array(
@@ -94,7 +93,9 @@ function barbwire_security_contextual_help( $help, $screen_id, $screen ) {
 		$content = '<p>';
 		$content .= __( '\'REST\' is REpresentational State Transfer function.<br>It is simple http request and respons API.', 'barbwire-security' ) . '<br>';
 		$content .= __( 'It has been incorporated into the WordPress core since version 4.7 and is used in several functions.', 'barbwire-security' ) . '<br>';
-		$content .= __( 'If you don\'t need to use server, you should be desable this function.', 'barbwire-security' ) . '<br>';
+		$content .= __( 'Various functions are now using the REST API, it is not always right to invalidate everything.' );
+		$content .= __( 'It is best to disable anonymous REST requests and enable them for specific functions.' ) . '<br>';
+		$content .= __( 'Samples that specify specific functions can be viewed by clicking the "Show examples" link.' );
 		$content .= '</p>';
 
 		$tab = array(
@@ -145,13 +146,19 @@ function barbwire_security_get_admin_posted_option() {
 	$options['pingback_suppress_enable'] = isset( $_POST['pingback_suppress_enable'] ) && $_POST['pingback_suppress_enable'] === '1' ? true : false;
 
 	/* REST API */
-	$options['disable_rest_api'] = isset( $_POST['disable_rest_api'] ) && $_POST['disable_rest_api'] === '1' ? true : false;
+	$options['disable_rest_api'] = isset( $_POST['disable_rest_api'] ) ? $_POST['disable_rest_api'] : 0;
 
 	$options['specified_end_point'] = isset( $_POST['specified_end_point'] ) && $_POST['specified_end_point'] === '1' ? true : false;
 
-	var_dump( $options['specified_end_point'] );
+	$options['end_points'] = array();
+	if ( isset( $_POST['end_points'] ) ) {
+		// Format the value.
+		$values = explode( "\n", $_POST['end_points'] );
+		$values = array_map( 'trim', $values );
+		$values = array_filter( $values, 'strlen' );
 
-	$options['end_points'] = isset( $_POST['end_points'] ) ? $_POST['end_points'] : '';
+		$options['end_points'] = $values;
+	}
 
 	return $options;
 
@@ -164,7 +171,7 @@ function barbwire_security_admin_init() {
 
 	if ( ! empty( $_POST['barb_secure'] ) ) {
 
-		// Check CSRF
+		// Check CSRF.
 		if ( ! check_admin_referer( Version::$name, 'barb_secure' ) ) {
 			exit_403();
 		}
