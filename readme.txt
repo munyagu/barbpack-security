@@ -29,8 +29,7 @@ Includes the following specific functions.
   Block DDOS attacks against other sites with yor WordPress site, pingback enabled.
 
 4.Disable the REST API function and reduce the risk of receiving external attacks.
-  The REST API function is a feature not used by most users.
-  If you do not recognize using it, let's disable it.
+  You can disable all REST APIs and you can partially disable them.
 
 These features will be able to choose whether or not to enable.
 
@@ -43,7 +42,9 @@ Also it works in both Apache and nginx.
 (photo by Keoni Cabral https://www.flickr.com/photos/keoni101/)
 == Installation ==
 
-1. Install and activate the plugin through the 'Plugins' menu in WordPress
+1. Install and activate the plugin through the 'Plugins' menu in WordPress.
+2. Go to Settings > Barbwire Security.
+3. Perform the necessary settings and press the Save button.
 
 == Screenshots ==
 
