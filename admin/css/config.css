@@ -48,29 +48,14 @@
     margin-bottom: 8px;
 }
 
-#secure #examples_installed {
-    display: none;
-}
-#secure #examples {
+#secure #advance {
     display: none;
 }
 
-#secure #end_point_list {
-    font-size: 0.9em;
-}
-
-#secure #end_point_list input[type=text] {
-    opacity: 1;
-    width: 100%;
-}
-
-#secure #end_point_list td {
-    border: 0;
+#secure #advance td {
+    border-width: 0 0 1px 0;
+    border-color: #ccc;
     padding: 0;
-}
-
-#secure #end_point_list td:first-child {
-    padding-right: 4px;
 }
 
 #secure a.help_link {

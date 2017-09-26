@@ -78,6 +78,7 @@ Refactor source codes
 
 = 1.2.1 =
 fix settings page duplication
+Specify support for version 4.8.2
 
 = 1.3.0 =
 Skipped
@@ -86,5 +87,5 @@ Skipped
 change Possible to finely set the restriction of REST API
 change Move menu to submenu of option
 fix Remove Notice Error in setting page
-Specify support for version 4.8.2
+add Link to setting page to plugin list page
 Refactored

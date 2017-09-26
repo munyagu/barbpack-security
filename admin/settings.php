@@ -148,7 +148,7 @@ function barbwire_security_get_admin_posted_option() {
 	/* REST API */
 	$options['disable_rest_api'] = isset( $_POST['disable_rest_api'] ) ? $_POST['disable_rest_api'] : 0;
 
-	$options['specified_end_point'] = isset( $_POST['specified_end_point'] ) && $_POST['specified_end_point'] === '1' ? true : false;
+	$options['installed_end_point'] = isset( $_POST['installed_end_point'] ) ? $_POST['installed_end_point'] : array();
 
 	$options['end_points'] = array();
 	if ( isset( $_POST['end_points'] ) ) {
@@ -199,10 +199,6 @@ function barbwire_security_admin_init() {
 			$messages->add( 'error', __( 'There is an error in the parameter value.', 'barbwire-security' ) );
 		}
 
-		if ( $options['specified_end_point'] == true && empty( $options['end_points'] ) ) {
-			$messages->add( 'error', __( 'Please specify the end point to allow.', 'barbwire-security' ) );
-		}
-
 
 		/* CAPTCHA */
 		/* TODO Unimplemented
@@ -233,7 +229,9 @@ function barbwire_security_admin_init() {
 
 add_action( 'admin_init', 'barbwire_security_admin_init' );
 
-
+/**
+ * Show notice messages.
+ */
 function barbwire_security_admin_notices() {
 	$messages = get_transient( BARB_SECURITY_SAVE_TRANSIENT );
 	$errors   = ! empty( $messages->errors['error'] ) ? $messages->errors['error'] : array();

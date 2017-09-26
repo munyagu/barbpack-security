@@ -9,6 +9,7 @@ $barbwire_security_options_tmp = get_transient( BARB_SECURITY_OPTION_TRANSIENT )
 if ( false === $barbwire_security_options_tmp ) {
 	$barbwire_security_options_tmp = array();
 }
+
 $barbwire_security_options = array_merge( BarbwireSecurity::get_option(), $barbwire_security_options_tmp );
 
 
@@ -101,7 +102,7 @@ $barbwire_security_options = array_merge( BarbwireSecurity::get_option(), $barbw
                 </tr>
             </table>
 
-            <h3><?php echo __( 'PINGBACK', 'barbwire-security' ) ?><a id="pingback" class="help_link" href="#"><img
+            <h3><?php echo __( 'XMLRCP PINGBACK', 'barbwire-security' ) ?><a id="pingback" class="help_link" href="#"><img
                             src="<?php echo plugins_url() . '/barbwire-security/img/question_icon.png' ?>"/></a></h3>
             <table>
                 <tr>
@@ -127,7 +128,7 @@ $barbwire_security_options = array_merge( BarbwireSecurity::get_option(), $barbw
                             src="<?php echo plugins_url() . '/barbwire-security/img/question_icon.png' ?>"/></a></h3>
             <table id="rest_api_settings">
                 <tr>
-                    <th><?php echo __( 'Disable REST API', 'barbwire-security' ) ?></th>
+                    <th><?php echo __( 'Restrict function of REST API', 'barbwire-security' ) ?></th>
                     <td>
 						<?php
 						$rest_api_value = 0;
@@ -136,6 +137,7 @@ $barbwire_security_options = array_merge( BarbwireSecurity::get_option(), $barbw
 						}
 						?>
                         <div>
+                            <strong>■<?php echo __( 'Select restriction method of REST API.', 'barbwire-security' ) ?></strong><br>
                             <!-- <label><input type="checkbox" name="disable_rest_api"
                                           value="1" <?php echo isset( $barbwire_security_options['disable_rest_api'] ) && $barbwire_security_options['disable_rest_api'] == true ? "checked='checked'" : ''; ?>>enable</label> -->
                             <label><input type="radio" name="disable_rest_api"
@@ -149,54 +151,57 @@ $barbwire_security_options = array_merge( BarbwireSecurity::get_option(), $barbw
                             </label>
                         </div>
                         <div id="endpoints">
-                            <label><input type="checkbox" name="specified_end_point"
-                                          value="1"<?php echo $barbwire_security_options['specified_end_point'] == true ? ' checked="checked"' : ''; ?>><?php echo __( 'Enable specified REST function.', 'barbwire-security' ) ?>
-                            </label><br>
-							<?php $end_points = implode( '&#13;', $barbwire_security_options['end_points'] ); ?>
-							<?php echo __( 'Input end point, separate by a line break.(left-hand match)', 'barbwire-security' ) ?>
+                            <strong>■<?php echo __( 'Specify the REST API function to enable.', 'barbwire-security' ) ?></strong><br>
+                            (<?php echo __( 'Those specified here ignore the above setting and the REST API is enabled.', 'barbwire-security' ); ?>)
                             <br>
-                            <strong><?php echo __( '※Those specified here ignore the above setting and the REST API is enabled.', 'barbwire-security' ); ?></strong>
-                            <br><textarea name="end_points"
-                                          style="width:100%;height: 100px;"><?php echo $end_points; ?></textarea>
-                        </div>
-                        <a id="toggle_examples" href="#"><?php echo __( 'Show excamples', 'barbwire-security' ) ?></a>
-                        <div id="examples">
-                            <strong><?php echo __( 'Part of endpoint registered in WordPress', 'barbwire-security' ) ?></strong>
+                            <?php echo __( 'Registered REST functions in WordPress', 'barbwire-security' ) ?><br>
 							<?php
-							$standard_end_points = BarbwireSecurity::get_ini();
-							$wp_rest_server      = rest_get_server();
-							$rest_namespaces     = $wp_rest_server->get_namespaces();
-							?>
-                            <table id="end_point_list">
-                                <tbody>
+							$ini_setting = BarbwireSecurity::get_ini();
 
-								<?php
-								foreach ( $rest_namespaces as $namespace ) {
+							$popular_end_points = $ini_setting['end_point_popular'];
+							$wp_rest_server     = rest_get_server();
+							$rest_namespaces    = $wp_rest_server->get_namespaces();
+							sort($rest_namespaces);
+							$added              = array();
 
-									$namespace_parent = dirname( $namespace ) . '/';
+							foreach ( $rest_namespaces as $namespace ) {
 
-									echo '<tr>';
-									echo '<td><input type="text" value="' . $namespace_parent . '" readonly="readonly" class="endpoint"></td>';
+								$function_name = '';
+								$namespace_parent = dirname( $namespace ) . '/';
 
-									if ( array_key_exists( $namespace_parent, $standard_end_points ) ) {
-
-										echo '<td>' . $standard_end_points[ $namespace_parent ] . '</td>';
-										unset( $standard_end_points[ $namespace_parent ] );
-									} else {
-										echo '<td></td>';
-									}
-									echo '</tr>';
+								if ( in_array( $namespace_parent, $added ) ) {
+									// Skip duplicate parent.
+									continue;
 								}
-								?>
+								$added[] = $namespace_parent;
 
-                                </tbody>
-                            </table>
+								if ( array_key_exists( $namespace_parent, $popular_end_points ) ) {
+									$function_name = $popular_end_points[ $namespace_parent ];
+									unset( $popular_end_points[ $namespace_parent ] );
+								} else {
+									$function_name = $namespace_parent;
+								}
+
+								$checked = in_array($namespace_parent, $barbwire_security_options['installed_end_point']) ? ' checked="checked"' : '';
+								echo '<label><input type="checkbox" name="installed_end_point[]" value="' . $namespace_parent . '"'. $checked .'>' . esc_html( $function_name ) . '</label><br>';
+							}
+
+							?>
+
+                        </div>
+                        <a id="toggle_advance" href="#"><strong><?php echo __( 'Show advance', 'barbwire-security' ) ?></strong></a>
+                        <div id="advance">
+                            <strong>■<?php echo __( 'Specify REST namespace', 'barbwire-security' ) ?></strong><br>
+							<?php $end_points = implode( '&#13;', $barbwire_security_options['end_points'] ); ?>
+							<?php echo __( 'Input namespaces, separate by a line break.(left-hand match)', 'barbwire-security' ) ?><br>
+                            <textarea name="end_points"
+                                          style="width:100%;height: 100px;"><?php echo $end_points; ?></textarea>
 
                             <strong><?php echo __( 'Other examples', 'barbwire-security' ) ?></strong><br>
                             <table id="end_point_list">
                                 <tbody>
 								<?php
-								foreach ( $standard_end_points as $namespace => $name ) {
+								foreach ( $popular_end_points as $namespace => $name ) {
 									echo '<tr><td>' . $namespace . '</td>';
 									echo '<td>' . $name . '</td></tr>';
 								}

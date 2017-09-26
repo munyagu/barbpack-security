@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Barbwire Security\n"
-"POT-Creation-Date: 2017-09-25 18:26+0900\n"
-"PO-Revision-Date: 2017-09-25 18:26+0900\n"
+"POT-Creation-Date: 2017-09-26 18:25+0900\n"
+"PO-Revision-Date: 2017-09-26 18:25+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ja\n"
@@ -64,7 +64,7 @@ msgid "Simply hideing author archive page so that block to leak login id."
 msgstr ""
 "単純に作成者アーカイブページを表示しないことで、ログインIDの漏洩を防ぎます。"
 
-#: admin/settings.php:74 admin/template/page-setting.php:96
+#: admin/settings.php:74 admin/template/page-setting.php:97
 msgid "Block the display of author archive page"
 msgstr "作成者アーカイブページが表示されないようにする"
 
@@ -128,7 +128,7 @@ msgstr ""
 "特定の機能を指定するサンプルは、「例を表示する」リンクをクリックすると表示で"
 "きます。"
 
-#: admin/settings.php:102 admin/template/page-setting.php:130
+#: admin/settings.php:102
 msgid "Disable REST API"
 msgstr "REST APIを無効にする"
 
@@ -144,107 +144,131 @@ msgstr "パラメータ名にエラーががあります"
 msgid "There is an error in the parameter value."
 msgstr "パラメータの値にエラーがあります"
 
-#: admin/settings.php:203
-msgid "Please specify the end point to allow."
-msgstr "許可するエンドポイントを指定してください。"
-
-#: admin/template/page-setting.php:18
+#: admin/template/page-setting.php:19
 msgid "Barbwire Security Settings"
 msgstr "Barbwire Security 設定"
 
-#: admin/template/page-setting.php:25 admin/template/page-setting.php:214
+#: admin/template/page-setting.php:26 admin/template/page-setting.php:219
 msgid "save"
 msgstr "保存"
 
-#: admin/template/page-setting.php:28
+#: admin/template/page-setting.php:29
 msgid "ADMIN LOGIN PAGE URL PARAMETER"
 msgstr "管理画面にURLパラメータを付与する"
 
-#: admin/template/page-setting.php:35
+#: admin/template/page-setting.php:36
 msgid "Login URL is"
 msgstr "ログインURL"
 
-#: admin/template/page-setting.php:41
+#: admin/template/page-setting.php:42
 msgid "enable login url parameter function"
 msgstr "URLパラメータの付与を有効にする"
 
-#: admin/template/page-setting.php:44 admin/template/page-setting.php:98
-#: admin/template/page-setting.php:110
+#: admin/template/page-setting.php:45 admin/template/page-setting.php:99
+#: admin/template/page-setting.php:111
 msgid "enable"
 msgstr "有効にする"
 
-#: admin/template/page-setting.php:48
+#: admin/template/page-setting.php:49
 msgid "parameter name"
 msgstr "パラメータ名"
 
-#: admin/template/page-setting.php:53 admin/template/page-setting.php:62
+#: admin/template/page-setting.php:54 admin/template/page-setting.php:63
 msgid "Alphanumeric characters and hyphens, underscores only."
 msgstr "半角英数字とハイフン、アンダーバーのみ登録できます。"
 
-#: admin/template/page-setting.php:57
+#: admin/template/page-setting.php:58
 msgid "parameter value"
 msgstr "パラメータの値"
 
-#: admin/template/page-setting.php:91
+#: admin/template/page-setting.php:92
 msgid "AUTHOR ARCHIVE"
-msgstr "AUTHOR ARCHIVE"
+msgstr "投稿者アーカイブ"
 
-#: admin/template/page-setting.php:104
-msgid "PINGBACK"
-msgstr "PINGBACK"
+#: admin/template/page-setting.php:105
+msgid "XMLRCP PINGBACK"
+msgstr "XMLRCP PINGBACK"
 
-#: admin/template/page-setting.php:108
+#: admin/template/page-setting.php:109
 msgid "Suppress Pingback function"
 msgstr "Pingback機能を制限する"
 
-#: admin/template/page-setting.php:126
+#: admin/template/page-setting.php:127
 msgid "REST API"
 msgstr "REST API"
 
-#: admin/template/page-setting.php:142
+#: admin/template/page-setting.php:131
+msgid "Restrict function of REST API"
+msgstr "REST APIの機能を制限する"
+
+#: admin/template/page-setting.php:140
+msgid "Select restriction method of REST API."
+msgstr "REST APIを制限する方法を選択する"
+
+#: admin/template/page-setting.php:144
 msgid "Enable REST API(WordPress default)"
 msgstr "REST APIを有効にする（WordPressデフォルトの状態）"
 
-#: admin/template/page-setting.php:145
+#: admin/template/page-setting.php:147
 msgid "Disable Anonymous REST request."
 msgstr "匿名のRESTリクエストを無効にする"
 
-#: admin/template/page-setting.php:148
+#: admin/template/page-setting.php:150
 msgid "Disable All REST request."
 msgstr "全てのRESTリクエストを無効にする"
 
-#: admin/template/page-setting.php:153
-msgid "Enable specified REST function."
-msgstr "指定された機能を有効にする"
+#: admin/template/page-setting.php:154
+msgid "Specify the REST API function to enable."
+msgstr "REST APIを有効にする機能を選択する"
 
-#: admin/template/page-setting.php:156
-msgid "Input end point, separate by a line break.(left-hand match)"
-msgstr "エンドポイントを改行で区切って入力します。（前方一致で判断します）"
-
-#: admin/template/page-setting.php:158
+#: admin/template/page-setting.php:155
 msgid ""
-"※Those specified here ignore the above setting and the REST API is enabled."
-msgstr "※指定されたものは、上記設定に関わらず有効になります。"
+"Those specified here ignore the above setting and the REST API is enabled."
+msgstr "※指定された機能は、上記設定に関わらず有効になります。"
 
-#: admin/template/page-setting.php:162
-msgid "Show excamples"
-msgstr "例を表示する"
+#: admin/template/page-setting.php:157
+msgid "Registered REST functions in WordPress"
+msgstr "WordPressに登録されているREST機能"
 
-#: admin/template/page-setting.php:164
-msgid "Part of endpoint registered in WordPress"
-msgstr "WordPressに登録されているend pointの一部"
+#: admin/template/page-setting.php:192
+msgid "Show advance"
+msgstr "上級者向け設定を表示"
 
-#: admin/template/page-setting.php:195
+#: admin/template/page-setting.php:194
+msgid "Specify REST namespace"
+msgstr "RESTのネームスペースを指定する"
+
+#: admin/template/page-setting.php:196
+msgid "Input namespaces, separate by a line break.(left-hand match)"
+msgstr "ネームスペースを改行で区切って入力します。（前方一致で判断します）"
+
+#: admin/template/page-setting.php:200
 msgid "Other examples"
 msgstr "他の例"
+
+#: barbwire-security.php:109
+msgid "Settings"
+msgstr "設定"
 
 #: inc/DisableRESTAPI.php:72
 msgid "You are not authenticated."
 msgstr "認証されていません"
 
-#: inc/functions.php:139
+#: inc/functions.php:160
 msgid "Failed to login."
 msgstr "不正なログインです"
+
+#~ msgid "Please specify the end point to allow."
+#~ msgstr "許可するエンドポイントを指定してください。"
+
+#~ msgid "Enable specified REST function."
+#~ msgstr "指定された機能を有効にする"
+
+#~ msgid "Show excamples"
+#~ msgstr "例を表示する"
+
+#~ msgid "Part of endpoint registered in WordPress"
+#~ msgstr "WordPressに登録されているend pointの一部"
 
 #~ msgid ""
 #~ "If you don't need to use <a href=\"http://v2.wp-api.org/\" target=\"blank"
