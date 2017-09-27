@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Barbwire Security\n"
-"POT-Creation-Date: 2017-09-27 12:23+0900\n"
-"PO-Revision-Date: 2017-09-27 12:23+0900\n"
+"POT-Creation-Date: 2017-09-27 13:10+0900\n"
+"PO-Revision-Date: 2017-09-27 13:10+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ja\n"
@@ -116,17 +116,15 @@ msgstr ""
 
 #: admin/settings.php:97
 msgid ""
-"It is best to disable anonymous REST requests and enable them for specific "
-"functions."
-msgstr "匿名のREST要求を無効にし、特定の機能に対しては有効にするのが最善です。"
+"Restricting the REST function can lower the risk of attacking the REST API.."
+msgstr ""
+"REST機能を制限することで、REST APIを攻撃されるリスクを下げることができます。"
 
 #: admin/settings.php:98
 msgid ""
-"Samples that specify specific functions can be viewed by clicking the \"Show "
-"examples\" link."
-msgstr ""
-"特定の機能を指定するサンプルは、「例を表示する」リンクをクリックすると表示で"
-"きます。"
+"It is best to disable anonymous REST requests and enable them for specific "
+"functions."
+msgstr "匿名のREST要求を無効にし、特定の機能に対しては有効にするのが最善です。"
 
 #: admin/settings.php:102
 msgid "Disable REST API"
@@ -253,6 +251,13 @@ msgstr "認証されていません"
 #: inc/functions.php:160
 msgid "Failed to login."
 msgstr "不正なログインです"
+
+#~ msgid ""
+#~ "Samples that specify specific functions can be viewed by clicking the "
+#~ "\"Show examples\" link."
+#~ msgstr ""
+#~ "特定の機能を指定するサンプルは、「例を表示する」リンクをクリックすると表示"
+#~ "できます。"
 
 #~ msgid "enable login url parameter function"
 #~ msgstr "URLパラメータの付与を有効にする"
