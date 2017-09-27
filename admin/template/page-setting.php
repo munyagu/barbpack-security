@@ -29,7 +29,7 @@ $barbwire_security_options = wp_parse_args( $barbwire_security_options_tmp, Barb
             <h3><?php echo __( 'ADMIN LOGIN PAGE URL PARAMETER', 'barbwire-security' ); ?><a id="login_parameter"
                                                                                              class="help_link"
                                                                                              href="#"><img
-                            src="<?php echo plugins_url() . '/barbwire-security/img/question_icon.png' ?>"/></a></h3>
+                            src="<?php echo plugins_url() . '/barbwire-security/admin/img/question_icon.png' ?>"/></a></h3>
 			<?php
 			$enable = $barbwire_security_options['parameter_enable'];
 			?>
@@ -91,7 +91,7 @@ $barbwire_security_options = wp_parse_args( $barbwire_security_options_tmp, Barb
             -->
             <h3><?php echo __( 'AUTHOR ARCHIVE', 'barbwire-security' ) ?><a id="author_archive" class="help_link"
                                                                             href="#"><img
-                            src="<?php echo plugins_url() . '/barbwire-security/img/question_icon.png' ?>"/></a></h3>
+                            src="<?php echo plugins_url() . '/barbwire-security/admin/img/question_icon.png' ?>"/></a></h3>
             <table>
                 <tr>
                     <th><?php echo __( 'Block the display of author archive page', 'barbwire-security' ) ?></th>
@@ -103,7 +103,7 @@ $barbwire_security_options = wp_parse_args( $barbwire_security_options_tmp, Barb
             </table>
 
             <h3><?php echo __( 'XMLRCP PINGBACK', 'barbwire-security' ) ?><a id="pingback" class="help_link" href="#"><img
-                            src="<?php echo plugins_url() . '/barbwire-security/img/question_icon.png' ?>"/></a></h3>
+                            src="<?php echo plugins_url() . '/barbwire-security/admin/img/question_icon.png' ?>"/></a></h3>
             <table>
                 <tr>
                     <th><?php echo __( 'Suppress Pingback function', 'barbwire-security' ) ?></th>
@@ -125,7 +125,7 @@ $barbwire_security_options = wp_parse_args( $barbwire_security_options_tmp, Barb
             -->
 
             <h3><?php echo __( 'REST API', 'barbwire-security' ) ?><a id="restapi" class="help_link" href="#"><img
-                            src="<?php echo plugins_url() . '/barbwire-security/img/question_icon.png' ?>"/></a></h3>
+                            src="<?php echo plugins_url() . '/barbwire-security/admin/img/question_icon.png' ?>"/></a></h3>
             <table id="rest_api_settings">
                 <tr>
                     <th><?php echo __( 'Restrict function of REST API', 'barbwire-security' ) ?></th>
