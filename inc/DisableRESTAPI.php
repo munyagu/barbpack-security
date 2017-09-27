@@ -3,6 +3,7 @@
 namespace barbsecurity;
 
 use \BarbwireSecurity as BarbwireSecurity;
+use \WP_Error as WP_Error;
 
 /**
  * Class DisableRESTAPI
@@ -27,10 +28,12 @@ class DisableRESTAPI {
 				add_filter( 'rest_jsonp_enabled', '__return_false' ); /* Deprecated in WordPress 4.7 */
 			}
 
-			add_filter( 'rest_authentication_errors', array(
-				'barbsecurity\DisableRESTAPI',
-				'rest_authentication_errors',
-			) );
+			add_filter( 'rest_authentication_errors',
+				array(
+					'barbsecurity\DisableRESTAPI',
+					'rest_authentication_errors',
+				)
+			);
 		}
 
 	}
@@ -40,6 +43,7 @@ class DisableRESTAPI {
 	 * Activate disable rest api without login
 	 */
 	public static function activate_auth() {
+
 		add_filter( 'rest_authentication_errors', function () {
 			if ( ! is_user_logged_in() ) {
 				return new WP_Error(
@@ -53,13 +57,14 @@ class DisableRESTAPI {
 
 			return null;
 		} );
+
 	}
 
 	/**
 	 * Always return error at check_authentication.
 	 * It always called in serve_request rest api version 2.0.
 	 *
-	 * @return \WP_Error
+	 * @return WP_Error
 	 */
 	public static function rest_authentication_errors() {
 
@@ -69,7 +74,13 @@ class DisableRESTAPI {
 			$error_code = 401;
 		}
 
-		return new \WP_Error( 'rest_authentication_error', __( 'You are not authenticated.' ), array( 'status' => $error_code ) );
+		return new WP_Error(
+			'rest_authentication_error',
+			'You are not authenticated.',
+			array(
+				'status' => $error_code,
+			)
+		);
 	}
 
 }
