@@ -1,8 +1,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Barbwire Security\n"
-"POT-Creation-Date: 2017-09-27 13:10+0900\n"
-"PO-Revision-Date: 2017-09-27 13:10+0900\n"
+"POT-Creation-Date: 2017-09-27 14:21+0900\n"
+"PO-Revision-Date: 2017-09-27 14:22+0900\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "Language: ja\n"
@@ -244,13 +244,12 @@ msgstr "他の例"
 msgid "Settings"
 msgstr "設定"
 
-#: inc/DisableRESTAPI.php:72
-msgid "You are not authenticated."
-msgstr "認証されていません"
-
 #: inc/functions.php:160
 msgid "Failed to login."
 msgstr "不正なログインです"
+
+#~ msgid "You are not authenticated."
+#~ msgstr "認証されていません"
 
 #~ msgid ""
 #~ "Samples that specify specific functions can be viewed by clicking the "

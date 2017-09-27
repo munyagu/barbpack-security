@@ -147,7 +147,7 @@ $barbwire_security_options = wp_parse_args( $barbwire_security_options_tmp, Barb
                                           value="1"<?php echo $rest_api_value === 1 ? ' checked="checked"' : ''; ?>><?php echo __( 'Disable Anonymous REST request.', 'barbwire-security' ) ?>
                             </label><br>
                             <label><input type="radio" name="disable_rest_api"
-                                          value="2"<?php echo $rest_api_value === 2 ? ' checked="checked"' : ''; ?>><?php echo __( 'Disable All REST request.' ) ?>
+                                          value="2"<?php echo $rest_api_value === 2 ? ' checked="checked"' : ''; ?>><?php echo __( 'Disable All REST request.', 'barbwire-security' ) ?>
                             </label>
                         </div>
                         <div id="endpoints">
