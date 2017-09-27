@@ -50,7 +50,7 @@ class BarbwireSecurity {
 	 * @return mixed options
 	 */
 	public static function get_option() {
-		return array_merge( self::$default_option_value, get_option( Version::$name ) );
+		return wp_parse_args( get_option( Version::$name ), self::$default_option_value );
 	}
 
 	/**

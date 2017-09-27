@@ -10,7 +10,7 @@ if ( false === $barbwire_security_options_tmp ) {
 	$barbwire_security_options_tmp = array();
 }
 
-$barbwire_security_options = array_merge( BarbwireSecurity::get_option(), $barbwire_security_options_tmp );
+$barbwire_security_options = wp_parse_args( $barbwire_security_options_tmp, BarbwireSecurity::get_option() );
 
 
 ?>

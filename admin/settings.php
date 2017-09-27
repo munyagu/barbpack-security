@@ -186,7 +186,7 @@ function barbwire_security_admin_init() {
 			return;
 		}
 
-		$options = array_merge( BarbwireSecurity::get_option(), barbwire_security_get_admin_posted_option() );
+		$options = wp_parse_args( barbwire_security_get_admin_posted_option(), BarbwireSecurity::get_option() );
 
 
 		// Check URL parameters
