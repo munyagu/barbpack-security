@@ -93,9 +93,9 @@ function barbwire_security_contextual_help( $help, $screen_id, $screen ) {
 		$content = '<p>';
 		$content .= __( '\'REST\' is REpresentational State Transfer function.<br>It is simple http request and respons API.', 'barbwire-security' ) . '<br>';
 		$content .= __( 'It has been incorporated into the WordPress core since version 4.7 and is used in several functions.', 'barbwire-security' ) . '<br>';
-		$content .= __( 'Various functions are now using the REST API, it is not always right to invalidate everything.' );
-		$content .= __( 'It is best to disable anonymous REST requests and enable them for specific functions.' ) . '<br>';
-		$content .= __( 'Samples that specify specific functions can be viewed by clicking the "Show examples" link.' );
+		$content .= __( 'Various functions are now using the REST API, it is not always right to invalidate everything.', 'barbwire-security' ) . '<br><br>';
+		$content .= __( 'Restricting the REST function can lower the risk of attacking the REST API..', 'barbwire-security' ) . '<br>';
+		$content .= __( 'It is best to disable anonymous REST requests and enable them for specific functions.', 'barbwire-security' );
 		$content .= '</p>';
 
 		$tab = array(
