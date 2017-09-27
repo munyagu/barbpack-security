@@ -39,7 +39,7 @@ $barbwire_security_options = wp_parse_args( $barbwire_security_options_tmp, Barb
                                                                               readonly="readonly"/></p>
             <table>
                 <tr>
-                    <th><?php echo __( 'enable login url parameter function', 'barbwire-security' ) ?></th>
+                    <th><?php echo __( 'Enable login url parameter function', 'barbwire-security' ) ?></th>
 
                     <td><label><input type="checkbox" name="parameter_enable"
                                       value="1" <?php echo $enable ? "checked='checked'" : ''; ?>><?php echo __( 'enable', 'barbwire-security' ) ?>
