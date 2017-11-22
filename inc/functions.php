@@ -54,8 +54,11 @@ function barb_security_login_init() {
 		} else if ( isset( $_SERVER['HTTP_REFERER'] ) && strpos( $_SERVER['HTTP_REFERER'], '/wp-admin/' ) !== false ) {
 			// do nothing case referer is wp-admin
 			return true;
+		} else if ('/wp-login.php?action=postpass' === untrailingslashit( $_SERVER['REQUEST_URI'] ) && 'POST' === $_SERVER['REQUEST_METHOD'] ) {
+			// Corresponds to password-protected posts
+			return true;
 		} else if ( isset( $_SERVER['HTTP_REFERER'] ) ) {
-			// それ以外のリファラでGETにパラメータがあることをチェックする
+			// other case check param
 			if ( ! LoginParameter::check_get_param() ) {
 				exit_404();
 			}
